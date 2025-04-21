@@ -63,6 +63,11 @@ struct PhotoFilterEditorView: View {
                 .onChange(of: viewModel.selectedFilter) { _, newValue in
                     viewModel.selectFilter(newValue)
                 }
+                
+                Button("Save to Photos") {
+                    viewModel.saveImagetoPhotos()
+                }
+
             }
         }
         .onChange(of: selectedItem) { _, newItem in

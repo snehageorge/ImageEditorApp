@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Photos
 import CoreImage.CIFilterBuiltins
 
 class PhotoEditorViewModel: ObservableObject {
@@ -94,6 +95,16 @@ class PhotoEditorViewModel: ObservableObject {
            let cgImage = CIContext().createCGImage(finalImage, from: finalImage.extent) {
             DispatchQueue.main.async {
                 self.editedImage = UIImage(cgImage: cgImage)
+            }
+        }
+    }
+    
+    func saveImagetoPhotos() {
+        PHPhotoLibrary.requestAuthorization { status in
+            if status == .authorized || status == .limited {
+                if let editedImage = self.editedImage {
+                    UIImageWriteToSavedPhotosAlbum(editedImage, nil, nil, nil)
+                }
             }
         }
     }
